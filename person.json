@@ -1,0 +1,106 @@
+[
+  {
+    "package": "tutorial",
+    "filename": "person.proto",
+    "name": "Person",
+    "type": "Message",
+    "properties": [
+      {
+        "name": "name",
+        "type": 9
+      },
+      {
+        "name": "id",
+        "type": 5
+      },
+      {
+        "name": "email",
+        "type": 9
+      },
+      {
+        "name": "address",
+        "type": 11
+      },
+      {
+        "name": "phones",
+        "type": 11
+      }
+    ]
+  },
+  {
+    "package": "tutorial",
+    "filename": "person.proto",
+    "name": "PhoneNumber",
+    "type": "Message",
+    "properties": [
+      {
+        "name": "number",
+        "type": 9
+      },
+      {
+        "name": "type",
+        "type": 14
+      }
+    ]
+  },
+  {
+    "package": "tutorial",
+    "filename": "person.proto",
+    "name": "Type",
+    "type": "Enum",
+    "values": [
+      {
+        "name": "MOBILE",
+        "value": 0
+      },
+      {
+        "name": "HOME",
+        "value": 1
+      },
+      {
+        "name": "WORK",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "tutorial",
+    "filename": "person.proto",
+    "name": "Address",
+    "type": "Message",
+    "properties": [
+      {
+        "name": "street",
+        "type": 9
+      },
+      {
+        "name": "city",
+        "type": 9
+      },
+      {
+        "name": "state",
+        "type": 9
+      },
+      {
+        "name": "zip",
+        "type": 9
+      }
+    ]
+  },
+  {
+    "package": "tutorial",
+    "filename": "person.proto",
+    "name": "AddressBook",
+    "type": "Message",
+    "properties": [
+      {
+        "name": "people",
+        "type": 11
+      },
+      {
+        "name": "lastUpdated",
+        "type": 11
+      }
+    ]
+  }
+]

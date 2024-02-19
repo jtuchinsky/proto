@@ -1,33 +1,53 @@
 syntax = "proto3";
 
-package tutorial;
+import "google/protobuf/timestamp.proto";
 
+package tutorial;
+// This is a Person message
 message Person {
+  // Person's name
   string name = 1;
+  // Person's id
   int32 id = 2;
+  // Person's email
   string email = 3;
+  // Person's address
   Address address = 4;
+  // Person's phone numbers
   repeated PhoneNumber phones = 5;
 }
 
+// This is a PhoneNumber message
 message PhoneNumber {
+  // Person's phone number
   string number = 1;
+  // Person's phone number type Enum
   enum Type {
+    // Mobile phone
     MOBILE = 0;
+    // Home phone
     HOME = 1;
+    // Work phone
     WORK = 2;
   }
+  // Person's phone number type
   Type type = 2;
 }
 
+// This is an Address message
 message Address {
+    // Person's street address
     string street = 1;
+    // Person's city
     string city = 2;
+    // Person's state
     string state = 3;
+    // Person's zip code
     string zip = 4;
    }
 
 message AddressBook {
   repeated Person people = 1;
+  google.protobuf.Timestamp lastUpdated = 2;
 }
 

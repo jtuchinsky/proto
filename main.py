@@ -5,6 +5,8 @@ import re
 import google.protobuf.descriptor_pb2 as pb2
 
 import main
+import plugin
+import tree
 
 
 # Press ⇧F10 to execute it or replace it with your code.
@@ -20,13 +22,23 @@ def read_descriptor_file(descriptor_file_path):
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-    node = create_tree()
-    myFunc(node)
-    print_proto_desc()
-    print(replace_double_underscore("a__b__c"))
-    print(replace_double_underscore("a___b___c"))
-    print(replace_double_underscore("a____b____c"))
+    # node = create_tree()
+    # myFunc(node)
+    # print_proto_desc()
+    # print(replace_double_underscore("a__b__c"))
+    # print(replace_double_underscore("a___b___c"))
+    descriptor_data = read_descriptor_file('person.desc')
+    file_descriptor_set = pb2.FileDescriptorSet()
+    file_descriptor_set.ParseFromString(descriptor_data)
+    for file_descriptor in file_descriptor_set.file:
+        root = tree.Node("root", tree.NodeType.ROOT, [], None)
+        for node in tree.traverse(root, file_descriptor):
+            print(node)
+        # t = tree.traverse(root, file_descriptor)
 
+        root.print_tree(root, "+- ", [])
+        print(root)
+    # plugin.generate_code(file_descriptor_set)
 
 def print_proto_desc():
     # global message_type, field
@@ -34,13 +46,17 @@ def print_proto_desc():
     file_descriptor_set = pb2.FileDescriptorSet()
     file_descriptor_set.ParseFromString(descriptor_data)
     for file_descriptor in file_descriptor_set.file:
-        print(f"File: {file_descriptor.name}")
-        for enum_type in file_descriptor.enum_type:
-            print(f"  Enum: {enum_type.name}")
-            for value in enum_type.value:
-                print(f"    Value: {value.name} ({value.number})")
-        for message_type in file_descriptor.message_type:
-            process_message_type(message_type)
+        print(f"File: {file_descriptor}")
+        if file_descriptor.HasField('source_code_info'):
+            print(f"  Source Code Info: {file_descriptor.source_code_info}")
+
+        # print(f"File: {file_descriptor.name}")
+        # for enum_type in file_descriptor.enum_type:
+        #     print(f"  Enum: {enum_type.name}")
+        #     for value in enum_type.value:
+        #         print(f"    Value: {value.name} ({value.number})")
+        # for message_type in file_descriptor.message_type:
+        #     process_message_type(message_type)
 
 
 def process_message_type(message: pb2.DescriptorProto):
@@ -55,7 +71,10 @@ def process_message_type(message: pb2.DescriptorProto):
     for oneof_decl in message.oneof_decl:
         print(f"    Oneof: {oneof_decl.name}")
     for field in message.field:
-        descr = field.DESCRIPTOR.enum_values_by_name
+        print(f"    Field: {type(field)}  ({field})")
+        descr = field.DESCRIPTOR
+        print(f"    Field_descr: {type(descr)}  ({descr})")
+
         print(f"    Field: {field.name}  ({field.type_name})")
 
 
